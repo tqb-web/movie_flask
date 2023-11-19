@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>用户反馈</title>
+        <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+     <!-- Favicons -->
+  <link href="static/assets/img/favicon.png" rel="icon">
+  <link href="static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+
+  <!-- Vendor CSS Files -->
+  <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/venobox/venobox.css" rel="stylesheet">
+        <link href="static/assets/css/personInfo.css" rel="stylesheet">
+  <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <!-- Template Main CSS File -->
+  <link href="static/assets/css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src="static/assets/js/delete_feedback.js"></script>
+    <style>
+.container2 {
+display: flex;
+width: 100%;
+height: 100%;
+padding: 20px;
+font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+color: #333;
+font-size: 36px;
+text-align: center;
+margin-top: 20px;
+}
+
+table {
+border-collapse: collapse;
+width: 100%;
+text-align: center;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0,0,0,0.2);
+table-layout: fixed;
+}
+
+th, td {
+padding: 12px;
+text-align: left;
+border: 1px solid #ddd;
+height: 7%;
+}
+
+th {
+background-color: #f2f2f2;
+color: #333;
+font-size: 16px;
+font-weight: bold;
+border-radius: 10px 10px 0 0;
+}
+
+tr:nth-child(even) {
+background-color: #f2f2f2;
+}
+
+.feedback-table tr:hover {
+background-color: #f2f2f2;
+cursor: pointer;
+}
+
+.feedback-id {
+color: #007bff;
+cursor: pointer;
+font-weight: bold;
+text-decoration: underline;
+font-size: 16px;
+padding-left: 8px;
+}
+
+.feedback-id.new {
+color: red;
+}
+
+.new {
+font-weight: bold;
+color: #007bff;
+}
+
+.new:hover {
+text-decoration: underline;
+}
+
+.delete-feedback-btn {
+background-color: red;
+color: white;
+border: none;
+padding: 8px;
+cursor: pointer;
+}
+
+.delete-feedback-btn:hover {
+background-color: #cc0000;
+}
+
+.feedback-detail {
+display: none;
+border: 1px solid #ddd;
+padding: 8px;
+}
+
+.feedback-detail.visible {
+display: revert;
+padding-left: 2px;
+}
+
+tr.feedback-row {
+margin-bottom: 8px;
+}
+
+.message1 {
+display: none;
+position: fixed;
+width: 10%;
+height: 5%;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+text-align: center;
+background-color: #4CAF50;
+border-radius: 5px;
+color: white;
+padding: 10px;
+font-size: 18px;
+}
+
+@media only screen and (max-width: 1000px) {
+.message1 {
+display: none;
+position: fixed;
+width: 25%;
+height: 4%;
+top: 30%;
+left: 50%;
+transform: translate(-50%, -50%);
+text-align: center;
+background-color: #4CAF50;
+border-radius: 5px;
+color: white;
+padding: 1px;
+font-size: 18px;
+}
+
+th, td {
+    padding: 0px;
+    text-align: left;
+    border: 1px solid #ddd;
+    height: 7%;
+}
+
+.feedback-id {
+color: #007bff;
+cursor: pointer;
+font-weight: bold;
+text-decoration: underline;
+font-size: 8px;
+padding-left: 1px;
+}
+.container2 {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+}
+    </style>
+</head>
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container">
+
+      <div class="logo float-left">
+        <h1 class="text-light"><a href="#" style="color: white;"><span>关于</span></a></h1>
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="/index" style="color: white;">首页<i class="la la-angle-down"></i></a></li>
+          <li><a href="/movie" style="color: white;">电影</a></li>
+          <li><a href="/score" style="color: white;">评分</a></li>
+          <li><a href="/cloud" style="color: white;">词云</a></li>
+          <li><a href="/aboutMe" style="color: white;">关于我</a></li>
+          <li><a href="/users" style="color: white;">管理用户</a></li>
+            <li><div class="dropdown">
+              <button class="button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ url_for('get_avatar') }}" alt="avatar" class="avatar" id="avatar">
+              </button>
+              <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/personInfo">个人信息</a>
+                <form method="post" action="/logout">
+                  <button class="dropdown-item" type="submit">退出登录</button>
+                </form>
+              </div>
+            </div></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+    <div class="container2">
+        <table>
+  <thead>
+    <tr>
+      <th style="width: 10%">编号</th>
+      <th style="width: 20%">用户</th>
+      <th style="width: 20%">主题</th>
+        <th style="width: 35%">反馈时间</th>
+        <th style="width: 15%">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for feedback in feedbacks %}
+    <tr>
+      <td><a href="#" class="feedback-id{% if feedback[6] == 1 %} new{% endif %}">{{ feedback[0] }}</a></td>
+      <td>{{ feedback[2] }}</td>
+      <td>{{ feedback[3] }}</td>
+        <td>{{ feedback[5] }}</td>
+        <td>
+        <button class="delete-feedback-btn" data-feedback-id="{{ feedback[0] }}">删除</button>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="feedback-detail"></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+              <div id="message1" class="message1"></div>
+</table>
+    </div>
+
+
+<script>
+    var feedbackid = document.querySelectorAll('.feedback-id');
+    feedbackid.forEach(function (id) {
+        id.addEventListener('click', function () {
+            var detailDiv = id.parentNode.parentNode.nextElementSibling.querySelector('.feedback-detail');
+            if (detailDiv.classList.contains('visible')) {
+                // 关闭详细信息
+                detailDiv.classList.remove('visible');
+                detailDiv.innerHTML = '';
+            } else {
+                // 打开详细信息
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        var feedback = JSON.parse(xhr.responseText);
+                        var detail = document.createElement('div');
+                        detail.innerHTML = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp详细信息:&nbsp&nbsp'+feedback.content;
+                        detail.style.fontWeight = 'bold';
+                        detailDiv.appendChild(detail);
+                        detailDiv.classList.add('visible');
+                    }
+                };
+                xhr.open('GET', '/view_feedback_1/' + id.textContent);
+                xhr.send();
+                id.classList.remove('new');
+            }
+        });
+    });
+</script>
+
+ <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>T</span></strong>. All Rights Reserved
+      </div>
+
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="static/assets/vendor/jquery/jquery.min.js"></script>
+  <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="static/assets/vendor/jquery-sticky/jquery.sticky.js"></script>
+  <script src="static/assets/vendor/venobox/venobox.min.js"></script>
+  <script src="static/assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="static/assets/vendor/counterup/counterup.min.js"></script>
+  <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="static/assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="static/assets/js/main.js"></script>
+
+</body>
+</html>

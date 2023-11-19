@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>豆瓣电影情感分析</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="static/assets/img/favicon.png" rel="icon">
+  <link href="static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+
+  <!-- Vendor CSS Files -->
+  <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="static/assets/css/style.css" rel="stylesheet">
+    <link href="static/assets/css/personInfo.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>-->
+
+    <style>
+  /* 标题样式 */
+  h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+
+    .input_container {
+        display: flex;
+        align-items: center;
+    }
+
+  /* 输入框样式 */
+  #movieNameInput {
+    display: block;
+    margin: 0 auto;
+    margin-right: 5px;
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #000;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+  }
+
+  /* 按钮样式 */
+  button {
+    display: block;
+    margin: 20px auto;
+    margin-left: 5px;
+    width: 50px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+</style>
+</head>
+
+<body>
+
+
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container">
+
+      <div class="logo float-left">
+        <h1 class="text-light"><a href="#" style="color: white;"><span>情感分析</span></a></h1>
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="/index" style="color: white;">首页<i class="la la-angle-down"></i></a></li>
+          <li><a href="/movie" style="color: white;">电影</a></li>
+          <li><a href="/score" style="color: white;">评分</a></li>
+          <li><a href="/cloud" style="color: white;">词云</a></li>
+          <li><a href="/aboutMe" style="color: white;">关于我</a></li>
+
+            <li><div class="dropdown">
+              <button class="button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ url_for('get_avatar') }}" alt="avatar" class="avatar" id="avatar">
+              </button>
+              <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/personInfo">个人信息</a>
+                <form method="post" action="/logout">
+                  <button class="dropdown-item" type="submit">退出登录</button>
+                </form>
+              </div>
+            </div></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+
+
+   <h1>输入电影名称</h1>
+  <div class="input_container">
+    <input type="text" id="movieNameInput">
+  <button onclick="generateAllPieCharts()">生成</button>
+  </div>
+    <div style="display: flex; width: 100%;">
+      <div id="pieChartContainer" style="flex-basis: 50%; height: 400px; position: relative;">
+                  <!-- 添加一个加载图标 -->
+    <div id="loadingIcon" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <img src="static/assets/img/loading2.gif" alt="加载中" style="width: 50px; height: 50px;">
+    </div>
+      </div>
+      <div id="pieChartContainer1" style="flex-basis: 50%;height: 400px;  position: relative;">
+                <!-- 添加一个加载图标 -->
+    <div id="loadingIcon1" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <img src="static/assets/img/loading2.gif" alt="加载中" style="width: 50px; height: 50px;">
+    </div>
+      </div>
+    </div>
+
+  <div style="display: flex; width: 100%;">
+  <div id="barChartContainer" style="flex-basis: 50%; height: 400px; position: relative;"></div>
+  <div id="barChartContainer1" style="flex-basis: 50%; height: 400px; position: relative;"></div>
+  </div>
+
+    <script>
+ async function generateAllPieCharts() {
+        // 将生成饼状图的函数包装成Promise，并放入一个数组中
+        var pieChartPromises = [
+            generatePieChart(),
+            generatePieChart1(),
+            generateBarCharts(),
+            generateBarCharts1()
+        ];
+
+        // 使用Promise.all()来并发执行生成饼状图的Promise
+        await Promise.all(pieChartPromises);
+        // 这里会等待所有Promise都完成后才会继续执行下面的代码
+
+        // 所有生成饼状图的Promise都已完成，可以在这里执行其他逻辑
+    }
+
+        function generatePieChart() {
+
+
+          // 显示加载图标
+var loadingIcon = document.getElementById('loadingIcon');
+  if (loadingIcon) {
+    // 显示加载图标
+    if (loadingIcon.style.display === 'none') {
+      loadingIcon.style.display = 'block';
+    }
+  }
+            var movieName = document.getElementById('movieNameInput').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/analyze_sentiment', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var result = JSON.parse(xhr.responseText);
+                    var pieChartContainer = echarts.init(document.getElementById('pieChartContainer'));
+                    var option = {
+                        title: {
+                            text: '《'+movieName+'》'+'短评情感分析'+'\n平均得分：'+result.comments_ave_score+'\n最高得分：'+result.comments_max_score+'\n最低得分：'+result.comments_min_score,
+                                x: 'center',
+                                y: 'top',
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: '{a} <br/>{b}: {c} ({d}%)'
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            top: 25,
+                            left: 20,
+                            data: ['正面情感', '中性情感', '负面情感']
+                        },
+                        series: [
+                            {
+                                name: '情感分析',
+                                type: 'pie',
+                                radius: '55%',
+                                center: ['50%', '60%'],
+                                data: [
+                                    {value: result.positive_count, name: '正面情感'},
+                                    {value: result.neutral_count, name: '中性情感'},
+                                    {value: result.negative_count, name: '负面情感'}
+                                ],
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                    }
+                                }
+                                ]
+                                };
+                                         pieChartContainer.setOption(option);
+                                               // 隐藏加载图标
+                                        if (loadingIcon) {
+                                          loadingIcon.style.display = 'none';
+                                        }
+                                }
+                                };
+                                         xhr.send('movie_name=' + movieName);
+                                          return new Promise(function(resolve, reject) {
+            // 在生成饼状图完成后调用resolve()
+            resolve();
+        });
+                                }
+
+
+        function generatePieChart1() {
+         // 显示加载图标
+var loadingIcon1 = document.getElementById('loadingIcon1');
+  if (loadingIcon1) {
+    // 显示加载图标
+    if (loadingIcon1.style.display === 'none') {
+      loadingIcon1.style.display = 'block';
+    }
+  }
+            var movieName = document.getElementById('movieNameInput').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/reviews_analyze_sentiment', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var result = JSON.parse(xhr.responseText);
+                    var pieChartContainer1 = echarts.init(document.getElementById('pieChartContainer1'));
+                    var option1 = {
+                        title: {
+                                text: '《'+movieName+'》'+'影评情感分析'+'\n平均得分：'+result.reviews_ave_score+'\n最高得分：'+result.reviews_max_score+'\n最低得分：'+result.reviews_min_score,
+                                x: 'center',
+                                y: 'top',
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: '{a} <br/>{b}: {c} ({d}%)'
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            top: 25,
+                            left: 20,
+                            data: ['正面情感', '中性情感', '负面情感']
+                        },
+                        series: [
+                            {
+                                name: '情感分析',
+                                type: 'pie',
+                                radius: '55%',
+                                center: ['50%', '60%'],
+                                data: [
+                                    {value: result.positive_count, name: '正面情感'},
+                                    {value: result.neutral_count, name: '中性情感'},
+                                    {value: result.negative_count, name: '负面情感'}
+                                ],
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                    }
+                                }
+                                ]
+                                };
+                                         pieChartContainer1.setOption(option1);
+                                          // 隐藏加载图标
+                                    if (loadingIcon1) {
+                                      loadingIcon1.style.display = 'none';
+                                    }
+                                }
+                                };
+                                         xhr.send('movie_name=' + movieName);
+                                          return new Promise(function(resolve, reject) {
+            // 在生成饼状图完成后调用resolve()
+            resolve();
+        });
+                                }
+
+
+function generateBarCharts() {
+
+            var movieName = document.getElementById('movieNameInput').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/bar_analyze_sentiment', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var result = JSON.parse(xhr.responseText);
+                    var barChartContainer = echarts.init(document.getElementById('barChartContainer'));
+                    var option2;
+
+                    option2 = {
+                      tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                          type: 'shadow'
+                        }
+                      },
+                      grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                      },
+                      xAxis: [
+                        {
+                          type: 'category',
+                          data: ['积极', '中立', '消极', '非常积极', '非常消极'],
+                          axisTick: {
+                            alignWithLabel: true
+                          }
+                        }
+                      ],
+                      yAxis: [
+                        {
+                          type: 'value'
+                        }
+                      ],
+                      series: [
+                        {
+                          name: 'Direct',
+                          type: 'bar',
+                          barWidth: '60%',
+                          data: [result.positive_count, result.neutral_count, result.negative_count, result.very_positive_count, result.very_negative_count]
+                        }
+                      ]
+                    };
+
+                    option2 && barChartContainer.setOption(option2);
+                                }
+                                };
+                                         xhr.send('movie_name=' + movieName);
+
+
+  }
+
+
+  //柱状图2
+  function generateBarCharts1() {
+
+            var movieName = document.getElementById('movieNameInput').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/bar_reviews_analyze_sentiment', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var result = JSON.parse(xhr.responseText);
+                    var barChartContainer1 = echarts.init(document.getElementById('barChartContainer1'));
+                    var option3;
+
+                    option3 = {
+                      tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                          type: 'shadow'
+                        }
+                      },
+                      grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                      },
+                      xAxis: [
+                        {
+                          type: 'category',
+                          data: ['积极', '中立', '消极', '非常积极', '非常消极'],
+                          axisTick: {
+                            alignWithLabel: true
+                          }
+                        }
+                      ],
+                      yAxis: [
+                        {
+                          type: 'value'
+                        }
+                      ],
+                      series: [
+                        {
+                          name: '数量',
+                          type: 'bar',
+                          barWidth: '60%',
+                          data: [result.positive_count, result.neutral_count, result.negative_count, result.very_positive_count, result.very_negative_count]
+                        }
+                      ]
+                    };
+
+                    option3 && barChartContainer1.setOption(option3);
+                                }
+                                };
+                                         xhr.send('movie_name=' + movieName);
+
+
+  }
+                            </script>
+
+
+<!--  &lt;!&ndash; ======= Footer ======= &ndash;&gt;-->
+<!--  <footer id="footer">-->
+
+<!--    <div class="container">-->
+<!--      <div class="copyright">-->
+<!--        &copy; Copyright <strong><span>T</span></strong>. All Rights Reserved-->
+<!--      </div>-->
+
+<!--    </div>-->
+<!--  </footer>&lt;!&ndash; End Footer &ndash;&gt;-->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="static/assets/vendor/jquery/jquery.min.js"></script>
+  <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="static/assets/vendor/jquery-sticky/jquery.sticky.js"></script>
+  <script src="static/assets/vendor/venobox/venobox.min.js"></script>
+  <script src="static/assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="static/assets/vendor/counterup/counterup.min.js"></script>
+  <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="static/assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="static/assets/js/main.js"></script>
+
+</body>
+
+</html>

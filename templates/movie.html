@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<!--  <meta content="width=device-width, initial-scale=1.0" name="viewport">-->
+
+  <title>豆瓣Top250数据分析</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="static/assets/img/favicon.png" rel="icon">
+  <link href="static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+
+  <!-- Vendor CSS Files -->
+  <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+
+<!--   Template Main CSS File-->
+  <link href="static/assets/css/style.css" rel="stylesheet">
+        <link href="static/assets/css/personInfo.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        @media only screen and (max-width: 1000px) {
+        .container{
+                max-width: 100%;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+
+  <!-- ======= Header ======= -->
+   <header id="header">
+    <div class="container">
+
+      <div class="logo float-left">
+        <h1 class="text-light"><a href="#" style="color: white;"><span>可视化</span></a></h1>
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="/index" style="color: white;">首页<i class="la la-angle-down"></i></a></li>
+          <li><a href="/movie" style="color: white;">电影</a></li>
+          <li><a href="/score" style="color: white;">评分</a></li>
+          <li><a href="/cloud" style="color: white;">词云</a></li>
+          <li><a href="/aboutMe" style="color: white;">关于我</a></li>
+
+            <li><div class="dropdown">
+              <button class="button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ url_for('get_avatar') }}" alt="avatar" class="avatar" id="avatar">
+              </button>
+              <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/personInfo">个人信息</a>
+                <form method="post" action="/logout">
+                  <button class="dropdown-item" type="submit">退出登录</button>
+                </form>
+              </div>
+            </div></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+
+  <!-- ======= Our Team Section ======= -->
+    <section id="team" class="team">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>豆瓣电影Top250电影</h2>
+        </div>
+
+        <!-- ======= Counts Section ======= -->
+    <section class="counts section-bg">
+      <div class="container">
+          <table class="table table-striped">
+              <tr>
+                  <td style="width:5%;">排名</td>
+                  <td style="width:15%;">电影中文名称</td>
+                  <td style="width:5%;">评分</td>
+                  <td style="width:5%;">评价人数</td>
+                  <td style="width:30%;">一句话概述</td>
+                  <td style="width:10%;">上映时间</td>
+                  <td style="width:15%;">地区</td>
+                  <td style="width:15%;">分类</td>
+              </tr>
+              {% for movie in movies %}
+              <tr>
+                  <td>{{movie[0]}}</td>
+                  <td>
+                      <a href="{{ movie[1] }}" target="_blank">
+                      {{ movie[3] }}
+                        </a>
+                  </td>
+                  <td>{{movie[4]}}</td>
+                  <td>{{movie[5]}}</td>
+                  <td>{{movie[6]}}</td>
+                  <td>{{movie[7]}}</td>
+                  <td>{{movie[8]}}</td>
+                  <td>{{movie[9]}}</td>
+              </tr>
+              {% endfor %}
+          </table>
+        </div>
+    </section><!-- End Counts Section -->
+
+      </div>
+    </section><!-- End Our Team Section -->
+
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>T</span></strong>. All Rights Reserved
+      </div>
+    
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="static/assets/vendor/jquery/jquery.min.js"></script>
+  <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="static/assets/vendor/jquery-sticky/jquery.sticky.js"></script>
+  <script src="static/assets/vendor/venobox/venobox.min.js"></script>
+  <script src="static/assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="static/assets/vendor/counterup/counterup.min.js"></script>
+  <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="static/assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="static/assets/js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<!--  <meta content="width=device-width, initial-scale=1.0" name="viewport">-->
+
+  <title>爬取电影</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="static/assets/img/favicon.png" rel="icon">
+  <link href="static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Vendor CSS Files -->
+  <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="static/assets/css/style.css" rel="stylesheet">
+        <link href="static/assets/css/personInfo.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<style>
+        .nav{
+		  margin-left: 20px;
+            width: auto;
+            display: flex;
+            height: auto;
+           /* background-color: aqua;*/
+        }
+
+.box{
+            width: 100%;
+            /* 超出部分隐藏 */
+            overflow: hidden;
+            margin: auto;
+		  display: flex;
+        }
+
+.content{
+            width: 100%;
+            height: 100%;
+            flex-shrink: 0;
+        }
+
+        @media only screen and (max-width: 1000px) {
+        .container{
+                max-width: 100%;
+            }
+        }
+
+
+#sort-buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f7f7;
+  padding: 10px;
+}
+
+.sort-button {
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sort-button:hover {
+  background-color: #ccc;
+  color: #fff;
+}
+
+#sort-buttons-container .active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+#sort-buttons-container .sort-button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <!-- ======= Header ======= -->
+   <header id="header">
+    <div class="container">
+
+      <div class="logo float-left">
+        <h1 class="text-light"><a href="#" style="color: white;"><span>可视化</span></a></h1>
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="/index" style="color: white;">首页<i class="la la-angle-down"></i></a></li>
+          <li><a href="/movie" style="color: white;">电影</a></li>
+          <li><a href="/score" style="color: white;">评分</a></li>
+          <li><a href="/cloud" style="color: white;">词云</a></li>
+          <li><a href="/aboutMe" style="color: white;">关于我</a></li>
+
+            <li><div class="dropdown">
+              <button class="button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ url_for('get_avatar') }}" alt="avatar" class="avatar" id="avatar">
+              </button>
+              <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/personInfo">个人信息</a>
+                <form method="post" action="/logout">
+                  <button class="dropdown-item" type="submit">退出登录</button>
+                </form>
+              </div>
+            </div></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+
+
+  <!-- ======= Our Team Section ======= -->
+    <section id="team" class="team">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>电影</h2>
+        </div>
+          <div id="sort-buttons-container">
+<button id="sort-by-vote" type="button" class="sort-button">按票房排序</button>
+<button id="sort-by-evaluation" type="button" class="sort-button">按评价人数排序</button>
+<button id="sort-by-comment" type="button" class="sort-button">按评论人数排序</button>
+          <button id="sort-by-score" type="button" class="sort-button">按评分排序</button>
+<button id="sort-by-order" type="button" class="sort-button">升序</button>
+          </div>
+        <!-- ======= Counts Section ======= -->
+    <section class="counts section-bg">
+      <div class="container">
+           <table class="table table-striped">
+              <tr>
+                  <td style="width:5%;">序号</td>
+                  <td style="width:15%;">电影名称</td>
+                  <td style="width:15%;">上映时间</td>
+                  <td style="width:10%;">票房</td>
+                  <td style="width:10%;">评分</td>
+                  <td style="width:15%;">类型</td>
+                  <td style="width:14%;">地区</td>
+			      <td style="width:8%;">评论数量</td>
+                  <td style="width:8%;">评价数量</td>
+              </tr>
+               <table id="movie-list" class="table table-striped"></table>
+           </table>
+        </div>
+    </section><!-- End Counts Section -->
+      </div>
+    </section><!-- End Our Team Section -->
+	</div>
+
+
+
+
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>T</span></strong>. All Rights Reserved
+      </div>
+    
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+<!--  &lt;!&ndash; Vendor JS Files &ndash;&gt;-->
+<!--  <script src="static/assets/vendor/jquery/jquery.min.js"></script>-->
+  <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="static/assets/vendor/jquery-sticky/jquery.sticky.js"></script>
+  <script src="static/assets/vendor/venobox/venobox.min.js"></script>
+  <script src="static/assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="static/assets/vendor/counterup/counterup.min.js"></script>
+  <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="static/assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="static/assets/js/main.js"></script>
+
+    <script src="static/assets/js/movie.js"></script>
+
+
+</body>
+
+</html>

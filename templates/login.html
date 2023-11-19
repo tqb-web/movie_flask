@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>豆瓣解析</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='PICTURE/dou.png') }}">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="static/CSS/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="box">
+        <div class="content">
+            <img class="login-img images" src="{{ url_for('static', filename='PICTURE/login.jpg') }}" alt="登录">
+            <img class="register-img images" src="{{ url_for('static', filename='PICTURE/register.jpg') }}" alt="注册">
+            <div class="login-wrapper">
+                <div class="top-tips">
+                    <span>welcome</span>
+                    <span class="top-tips-span">注册</span>
+                </div>
+                <h1 class="h1-text">登录</h1>
+                <div class="other-login">
+                  <a href="https://www.ai.com">
+                   <img src="{{ url_for('static', filename='PICTURE/QQ.png') }}" alt="#">
+                    <span>使用QQ登录</span>
+                  </a>
+                </div>
+                <form action="/login" method="post">
+                <div class="login-form">
+                    <div class="user-form form-item">
+                        <div class="text-tips">
+                            <span>账号</span>
+                        </div>
+                        <input type="text" placeholder="Enter Username" name="username" required>
+
+                    </div>
+                    <div class="password-form form-item">
+                        <div class="text-tips">
+                            <span>密码</span>
+                       <a id="forgot-password-link" href="#">忘记密码?</a>
+                        </div>
+                        <input type="password" placeholder="Enter Password" name="password" required>
+
+                    </div>
+                    <button class="btn"  type="submit">登录</button>
+                </div>
+                </form>
+                <form action="/register" method="post" id="registerForm">
+                    <div class="register-form">
+                        <div class="user-form form-item">
+                            <div class="text-tips">
+                                <span>账号</span>
+                            </div>
+                            <input type="text" placeholder="Enter Username" id="r_username" name="username" maxlength="11" required>
+                            <span id="usernameMsg" ></span>
+                        </div>
+                        <div class="password-form form-item">
+                            <div class="text-tips">
+                                <span>密码</span>
+                            </div>
+                            <input type="password" id="r_password" placeholder="Enter Password" name="r_password" required>
+                            <span id="r_passwordMsg"></span>
+                        </div>
+                        <div class="password-confirm-form form-item">
+                            <div class="text-tips">
+                                <span>确认密码</span>
+                            </div>
+                            <input type="password" id="cpassword" placeholder="Confirm Password" name="cpassword" required>
+                            <span id="cpasswordMsg" ></span>
+                        </div>
+                        <button class="btn" type="submit">注册</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div id="error-message" class="error-message" style="display: none;">{{ error }}</div>
+</body>
+<script>
+    let flag = 1;
+    document.querySelector('.top-tips-span').addEventListener('click', function () {
+        if (flag) {
+            document.querySelector('.content').classList.add("add-class-content");
+            document.querySelector('.login-img').classList.add("add-class-login-img");
+            document.querySelector('.register-img').classList.add("add-class-register-img");
+            document.querySelector('.login-img').classList.remove("add-class-login-img-show");
+            document.querySelector('.login-wrapper').style.height = '80vh';
+            document.querySelector('.content').style.height = '90vh';
+            document.querySelector('.login-form').style.display = 'none';
+            document.querySelector('.register-form').style.display = 'block';
+            document.querySelector('.top-tips-span').innerHTML = '登录';
+            document.querySelector('.h1-text').innerHTML = '注册';
+            flag = 0;
+        }
+        else {
+            document.querySelector('.content').classList.remove("add-class-content");
+            document.querySelector('.login-img').classList.remove("add-class-login-img");
+            document.querySelector('.login-img').classList.add("add-class-login-img-show");
+            document.querySelector('.register-img').classList.remove("add-class-register-img");
+            document.querySelector('.login-wrapper').style.height = '70vh';
+            document.querySelector('.content').style.height = '85vh';
+            document.querySelector('.login-form').style.display = 'block';
+            document.querySelector('.register-form').style.display = 'none';
+            document.querySelector('.top-tips-span').innerHTML = '注册';
+            document.querySelector('.h1-text').innerHTML = '登录';
+            flag = 1;
+        }
+    })
+</script>
+<script>
+        $(function() {
+            var usernameInput = $("#r_username");
+            var usernameMsg = $("#usernameMsg");
+
+            // 定义函数：检查用户名是否已存在
+            function checkUsername() {
+                var username = usernameInput.val().trim();
+                if (username === "") {
+                    usernameMsg.text("");
+                    return;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url_for('check_username') }}",
+                    data: {"username": username},
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.exists) {
+                            usernameMsg.text("用户名已存在!").css("color", "red");
+                        } else {
+                            usernameMsg.text("").css("color", "green");
+                        }
+                    }
+                });
+            }
+
+            // 监听用户名输入框的失去焦点事件，实时检查用户名是否已存在
+            usernameInput.on("blur", checkUsername);
+
+            		// 注册界面密码栏失去焦点
+			$("#r_password").blur(function() {
+			reg = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]{6,20})$/
+			if($(this).val() == "") {
+				$(this).addClass("errorInput");
+				$(this).next().css("color","red").html("密码不能为空！");
+			} else if(!reg.test($("#r_password").val())) {
+				$(this).addClass("errorInput");
+				$(this).next().css("color","red").html("请输入6-20位包含数字或字母的密码！");
+			} else {
+				$(this).addClass("correctInput");
+				$(this).removeClass("errorInput");
+				$(this).next().empty();
+			}
+		});
+
+		// 注册界面确认密码失去焦点
+		$("#cpassword").blur(function() {
+			var pwd1 = $('#r_password').val();
+			var pwd2 = $(this).val();
+			if(pwd1 == "") {
+				$(this).removeClass("errorInput");
+				$(this).next().css("color","red").html("确认密码不能为空！");
+				$(this).addClass("errorInput");
+				return;
+			} else if(pwd1 != pwd2) {
+				$(this).addClass("errorInput");
+				$(this).removeClass("correctInput");
+				$(this).next().css("color","red").html("两次密码输入不一致！");
+			} else {
+				$(this).removeClass("errorInput");
+				$(this).addClass("correctInput");
+				$(this).next().empty();
+			}
+		});
+
+            // 监听表单提交事件，如果用户名已存在则阻止表单提交
+            $("#registerForm").on("submit", function(event) {
+                var p1 =$("#r_password").val();
+		        var p2 =$("#cpassword").val();
+                if (usernameMsg.text() !== "" || p1 !== p2 || !reg.test($("#r_password").val())) {
+                    event.preventDefault();
+                    alert("注册失败，请按要求填写！")
+                }
+            });
+        });
+
+        // 获取忘记密码链接
+var forgotPasswordLink = document.getElementById("forgot-password-link");
+
+// 为忘记密码链接添加点击事件监听器
+forgotPasswordLink.addEventListener("click", function(event) {
+    // 阻止链接的默认行为，即防止浏览器跳转到链接的目标页面
+    event.preventDefault();
+
+    // 显示提示消息框
+    alert("请联系 QQ:1797834904 以重置密码。");
+});
+
+    </script>
+<script src="{{ url_for('static', filename='JavaScript/index.js') }}"></script>
+</html>

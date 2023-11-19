@@ -1,0 +1,172 @@
+ body {
+        font-family: Arial, sans-serif;
+        background-color: #f1f1f1;
+      }
+      .container1 {
+        max-width: 800px;
+        margin: auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        margin-top: 0px;
+        color: #444;
+      }
+      form {
+        margin-top: 20px;
+      }
+      label {
+        display: inline-block;
+        margin-bottom: 5px;
+        color: #555;
+      }
+      input[type="text"],
+      input[type="password"],
+      select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+      .error {
+        color: #ff0000;
+      }
+
+.message {
+  display: none;
+  position: fixed;
+  width: 10%;
+  height: 5%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: #4CAF50;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  font-size: 18px;
+}
+
+
+#avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border: none;
+}
+
+@media (max-width: 600px) {
+#avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+    margin-left: 50%;
+}
+}
+
+#avatar:hover {
+  background-color: #eee;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.button:focus {
+  outline: none;
+}
+
+
+.dropdown-menu a.dropdown-item:hover {
+  background-color: #F7F7F7;
+}
+
+.dropdown-menu a.dropdown-item:focus {
+  background-color: #F7F7F7;
+}
+
+.dropdown-menu .dropdown-item:focus {
+  outline: none;
+  background-color: transparent;
+}
+
+.dropdown-menu .dropdown-item {
+  color: #333;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.5;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  color: #333;
+  text-decoration: none;
+  background-color: #F7F7F7;
+}
+
+.dropdown-menu .dropdown-item:active {
+  background-color: transparent;
+}
+
+.dropdown-menu .dropdown-item:last-child {
+  border-bottom: none;
+}
+
+
+@media only screen and (max-width: 1000px) {
+    .message {
+  display: none;
+  position: fixed;
+  width: 40%;
+  height: 5%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: #4CAF50;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  font-size: 18px;
+}
+
+}
+
+#password-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 0px;
+}
+
+input[type="submit"]:disabled {
+    background-color: #CCCCCC;
+}

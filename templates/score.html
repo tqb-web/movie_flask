@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+
+  <title>电影数据分析</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="static/assets/img/favicon.png" rel="icon">
+  <link href="static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+
+  <!-- Vendor CSS Files -->
+  <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+    <!--<script src="static/assets/js/echarts.min.js"></script>-->
+  <!--<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>-->
+  <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script src="static/assets/js/ecStat.min.js"></script>
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+  <!-- Template Main CSS File -->
+  <link href="static/assets/css/style.css" rel="stylesheet">
+        <link href="static/assets/css/personInfo.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+
+
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container">
+
+      <div class="logo float-left">
+        <h1 class="text-light"><a href="#" style="color: white;"><span>可视化</span></a></h1>
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="/index" style="color: white;">首页<i class="la la-angle-down"></i></a></li>
+          <li><a href="/movie" style="color: white;">电影</a></li>
+          <li><a href="/score" style="color: white;">评分</a></li>
+          <li><a href="/cloud" style="color: white;">词云</a></li>
+            <li><a href="/detailed_charts" style="color: white;">详细图表</a></li>
+          <li><a href="/aboutMe" style="color: white;">关于我</a></li>
+
+            <li><div class="dropdown">
+              <button class="button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ url_for('get_avatar') }}" alt="avatar" class="avatar" id="avatar">
+              </button>
+              <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/personInfo">个人信息</a>
+                <form method="post" action="/logout">
+                  <button class="dropdown-item" type="submit">退出登录</button>
+                </form>
+              </div>
+            </div></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+
+  <!-- ======= Our Team Section ======= -->
+    <section id="team" class="team">
+      <div class="container">
+        <!-- ======= Counts Section ======= -->
+    <section class="counts section-bg">
+      <div class="container">
+            <div class="section-title">
+                <h2>豆瓣Top250评分分布图</h2>
+            </div>
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="main" style="width: 100%;height:300px"></div>
+            <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        var kv = new Array();//声明一个新的字典
+        kv = {{ res1|safe }};//取出后台传递的数据，此处添加safe过滤避免警告
+        var test = new Array();//声明一个新的字典用于存放数据
+        for (var logKey in kv) {
+        //将对应键值对取出存入test，logKey 为该字典的键
+          test.push({value: kv[logKey], name: logKey});
+        }
+
+        //打印数组
+        function print_array(arr){
+            for(var key in arr){
+                if(typeof(arr[key])=='array'||typeof(arr[key])=='object'){//递归调用
+                    print_array(arr[key]);
+                }else{
+                    document.write(key + ' = ' + arr[key] + '<br>');
+                }
+            }
+        }
+<!--        {#print_array(test)#}-->
+        // 指定图表的配置项和数据
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b} : {c} ({d}%)'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: {{ score1|tojson }}
+                {#data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']#}
+            },
+            series: [
+                {
+                    name: '占比',
+                    type: 'pie',
+                    radius: '85%',
+                    center: ['50%', '55%'],
+                    data: test,
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+        </script>
+      </div>
+        </section><!-- End Counts Section -->
+        <section class="counts section-bg">
+
+        <div class="container">
+            <div class="section-title">
+                <h2>豆瓣Top250上映年份分布图</h2>
+            </div>
+
+            <div id="tiaoxing" style="width: 100%;height:400px;"></div>
+            <script type="text/javascript">
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart2 = echarts.init(document.getElementById('tiaoxing'));
+
+        // 指定图表的配置项和数据
+        var option2 = {
+            color: ['#3398DB'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+ 			 bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: {{movie_year1|tojson}},
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '电影数量',
+                    type: 'bar',
+                    barWidth: '60%',
+                    data: {{ movie_num1 }}
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart2.setOption(option2);
+        </script>
+        </div>
+
+
+    </section><!-- End Counts Section -->
+
+
+
+	<section class="counts section-bg">
+
+        <div class="container">
+            <div class="section-title">
+                <h2>评分分布图</h2>
+            </div>
+            <div id="tiaoxing2" style="width: 100%;height:400px;"></div>
+            <script type="text/javascript">
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart3 = echarts.init(document.getElementById('tiaoxing2'));
+
+        // 指定图表的配置项和数据
+        var option3 = {
+            color: ['#3398DB'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: {{score2|tojson}},
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '电影数量',
+                    type: 'bar',
+                    barWidth: '60%',
+                    data: {{ num2 }}
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart3.setOption(option3);
+        </script>
+        </div>
+
+
+    </section><!-- End Counts Section -->
+
+
+<section class="counts section-bg">
+      <div class="container">
+            <div class="section-title">
+                <h2>电影评分扇形分布图</h2>
+            </div>
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="main2" style="width: 100%;height:500px"></div>
+            <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart4 = echarts.init(document.getElementById('main2'));
+
+        var kv = new Array();//声明一个新的字典
+        kv = {{ res2|safe }};//取出后台传递的数据，此处添加safe过滤避免警告
+        var test = new Array();//声明一个新的字典用于存放数据
+        for (var logKey in kv) {
+        //将对应键值对取出存入test，logKey 为该字典的键
+          test.push({value: kv[logKey], name: logKey});
+        }
+
+        //打印数组
+        function print_array(arr){
+            for(var key in arr){
+                if(typeof(arr[key])=='array'||typeof(arr[key])=='object'){//递归调用
+                    print_array(arr[key]);
+                }else{
+                    document.write(key + ' = ' + arr[key] + '<br>');
+                }
+            }
+        }
+        {#print_array(test)#}
+        // 指定图表的配置项和数据
+        var option4 = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b} : {c} ({d}%)'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: {{ score2|tojson }}
+            },
+            series: [
+                {
+                    name: '占比',
+                    type: 'pie',
+                    radius: '85%',
+                    center: ['50%', '55%'],
+                    data: test,
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart4.setOption(option4);
+
+        </script>
+      </div>
+        </section><!-- End Counts Section -->
+
+
+
+	<section class="counts section-bg">
+
+        <div class="container">
+            <div class="section-title">
+                <h2>年份分布图</h2>
+            </div>
+            <div id="tiaoxing3" style="width: 100%;height:400px;"></div>
+            <script type="text/javascript">
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart5 = echarts.init(document.getElementById('tiaoxing3'));
+
+        // 指定图表的配置项和数据
+        var option5 = {
+            color: ['#3398DB'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: {{movie_year2|tojson}},
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '电影数量',
+                    type: 'bar',
+                    barWidth: '60%',
+                    data: {{ movie_num2 }}
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart5.setOption(option5);
+        </script>
+        </div>
+
+
+    </section><!-- End Counts Section -->
+
+
+
+
+
+
+<section class="counts section-bg">
+      <div class="container">
+            <div class="section-title">
+                <h2>电影年份扇形分布图</h2>
+            </div>
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="main3" style="width: 100%;height:700px"></div>
+            <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart6 = echarts.init(document.getElementById('main3'));
+
+        var kv = new Array();//声明一个新的字典
+        kv = {{ res3|safe }};//取出后台传递的数据，此处添加safe过滤避免警告
+        var test = new Array();//声明一个新的字典用于存放数据
+        for (var logKey in kv) {
+        //将对应键值对取出存入test，logKey 为该字典的键
+          test.push({value: kv[logKey], name: logKey});
+        }
+
+        //打印数组
+        function print_array(arr){
+            for(var key in arr){
+                if(typeof(arr[key])=='array'||typeof(arr[key])=='object'){//递归调用
+                    print_array(arr[key]);
+                }else{
+                    document.write(key + ' = ' + arr[key] + '<br>');
+                }
+            }
+        }
+        {#print_array(test)#}
+        // 指定图表的配置项和数据
+        var option6 = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b} : {c} ({d}%)'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: {{ movie_year2|tojson }}
+            },
+            series: [
+                {
+                    name: '占比',
+                    type: 'pie',
+                    radius: '85%',
+                    center: ['60%', '50%'],
+                    data: test,
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart6.setOption(option6);
+
+        </script>
+      </div>
+        </section><!-- End Counts Section -->
+
+
+
+
+
+
+
+	<section class="counts section-bg">
+
+        <div class="container">
+            <div class="section-title">
+                <h2>高分电影国家</h2>
+            </div>
+            <div id="tiaoxing4" style="width: 100%;height:400px;"></div>
+            <script type="text/javascript">
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart7 = echarts.init(document.getElementById('tiaoxing4'));
+
+        // 指定图表的配置项和数据
+        var option7 = {
+            color: ['#3398DB'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: {{movie_country|tojson}},
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '电影数量',
+                    type: 'bar',
+                    barWidth: '60%',
+                    data: {{ nums_country }}
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart7.setOption(option7);
+        </script>
+        </div>
+
+
+    </section><!-- End Counts Section -->
+
+
+
+
+	<section class="counts section-bg">
+
+        <div class="container">
+            <div class="section-title">
+                <h2>高分电影类型</h2>
+            </div>
+            <div id="tiaoxing5" style="width: 100%;height:400px;"></div>
+            <script type="text/javascript">
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart8 = echarts.init(document.getElementById('tiaoxing5'));
+
+        // 指定图表的配置项和数据
+        var option8 = {
+            color: ['#3398DB'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: {{movie_category|tojson}},
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '电影数量',
+                    type: 'bar',
+                    barWidth: '60%',
+                    data: {{  nums_category }}
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart8.setOption(option8);
+        </script>
+        </div>
+    </section><!-- End Counts Section -->
+
+
+
+
+          <section class="counts section-bg">
+
+        <div class="container">
+            <div class="section-title">
+                <h2>散点图</h2>
+            </div>
+            <div id="sandian" style="width: 100%;height:400px;"></div>
+            <script type="text/javascript">
+
+                var chartDom = document.getElementById('sandian');
+                var myChart = echarts.init(chartDom);
+                var option;
+
+                option = {
+                  xAxis: {
+                    scale: true
+                  },
+                  yAxis: {
+                    scale: true
+                  },
+                  series: [
+                    {
+                      type: 'effectScatter',
+                      symbolSize: 20,
+                      data: [
+
+                      ]
+                    },
+                    {
+                      type: 'scatter',
+                      // prettier-ignore
+                      data: {{sandians|tojson}}
+                    }
+                  ]
+                };
+
+                option && myChart.setOption(option);
+
+
+        </script>
+        </div>
+    </section><!-- End Counts Section -->
+
+
+
+
+
+
+	<section class="counts section-bg">
+
+        <div class="container">
+            <div class="section-title">
+                <h2>散点图</h2>
+            </div>
+            <div id="sandian1" style="width: 100%;height:400px;"></div>
+            <script type="text/javascript">
+
+
+                var chartDom = document.getElementById('sandian1');
+                var myChart = echarts.init(chartDom);
+                var option;
+
+                option = {
+                  title: {
+                    text: '评分与票房年份散点图',
+                    subtext: 'Data from: 豆瓣'
+                  },
+                  grid: {
+                    left: '3%',
+                    right: '7%',
+                    bottom: '7%',
+                    containLabel: true
+                  },
+                  tooltip: {
+                    // trigger: 'axis',
+                    showDelay: 0,
+                    formatter: function (params) {
+                      if (params.value.length > 1) {
+                        return (
+                          params.seriesName +
+                          ' :<br/>' +
+                          params.value[0] +
+                          '年 ' +
+                          params.value[1] +
+                          '万 '
+                        );
+                      } else {
+                        return (
+                          params.seriesName +
+                          ' :<br/>' +
+                          params.name +
+                          ' : ' +
+                          params.value +
+                          '万 '
+                        );
+                      }
+                    },
+                    axisPointer: {
+                      show: true,
+                      type: 'cross',
+                      lineStyle: {
+                        type: 'dashed',
+                        width: 1
+                      }
+                    }
+                  },
+                  toolbox: {
+                    feature: {
+                      dataZoom: {},
+                      brush: {
+                        type: ['rect', 'polygon', 'clear']
+                      }
+                    }
+                  },
+                  brush: {},
+                  legend: {
+                    data: ['<=8.0', '>8.0'],
+                    left: 'center',
+                    bottom: 10
+                  },
+                  xAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      axisLabel: {
+                        formatter: '{value} 年'
+                      },
+                      splitLine: {
+                        show: false
+                      }
+                    }
+                  ],
+                  yAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      axisLabel: {
+                        formatter: '{value} 万'
+                      },
+                      splitLine: {
+                        show: false
+                      }
+                    }
+                  ],
+                  series: [
+                    {
+                      name: '<=8.0',
+                      type: 'scatter',
+                      emphasis: {
+                        focus: 'series'
+                      },
+                      // prettier-ignore
+                      data: {{datamin|tojson}},
+                      markArea: {
+                        silent: true,
+                        itemStyle: {
+                          color: 'transparent',
+                          borderWidth: 1,
+                          borderType: 'dashed'
+                        },
+                        data: [
+                          [
+                            {
+                              name: 'Less than or equal to 8.0',
+                              xAxis: 'min',
+                              yAxis: 'min'
+                            },
+                            {
+                              xAxis: 'max',
+                              yAxis: 'max'
+                            }
+                          ]
+                        ]
+                      },
+                      markPoint: {
+                        data: [
+                          { type: 'max', name: 'Max' },
+                          { type: 'min', name: 'Min' }
+                        ]
+                      },
+                      markLine: {
+                        lineStyle: {
+                          type: 'solid'
+                        },
+                        data: [{ type: 'average', name: 'AVG' }, { xAxis: 160 }]
+                      }
+                    },
+                    {
+                      name: '>8.0',
+                      type: 'scatter',
+                      emphasis: {
+                        focus: 'series'
+                      },
+                      // prettier-ignore
+                      data: {{datamax|tojson}},
+                      markArea: {
+                        silent: true,
+                        itemStyle: {
+                          color: 'transparent',
+                          borderWidth: 1,
+                          borderType: 'dashed'
+                        },
+                        data: [
+                          [
+                            {
+                              name: 'More than 8.0',
+                              xAxis: 'min',
+                              yAxis: 'min'
+                            },
+                            {
+                              xAxis: 'max',
+                              yAxis: 'max'
+                            }
+                          ]
+                        ]
+                      },
+                      markPoint: {
+                        data: [
+                          { type: 'max', name: 'Max' },
+                          { type: 'min', name: 'Min' }
+                        ]
+                      },
+                      markLine: {
+                        lineStyle: {
+                          type: 'solid'
+                        },
+                        data: [{ type: 'average', name: 'Average' }, { xAxis: 170 }]
+                      }
+                    }
+                  ]
+                };
+
+                option && myChart.setOption(option);
+
+        </script>
+        </div>
+    </section><!-- End Counts Section -->
+
+
+
+
+          <section class="counts section-bg">
+
+        <div class="container">
+            <div class="section-title">
+                <h2>世界地图(电影分布）</h2>
+            </div>
+            <div id="worldmp" style="width: 100%;height:400px;"></div>
+
+            <script type="text/javascript">
+
+            var chartDom = document.getElementById('worldmp');
+            var myChart = echarts.init(chartDom);
+            var option1;
+
+            myChart.showLoading();
+            $.get('../static/world.json', function (usaJson) {
+              myChart.hideLoading();
+                echarts.registerMap('world', usaJson, {
+
+              });
+              var data = {{result|tojson}};
+              data.sort(function (a, b) {
+                return a.value - b.value;
+              });
+              const mapOption = {
+                visualMap: {
+                  left: 'right',
+                  min: 0,
+                  max: 170,
+                  inRange: {
+                    // prettier-ignore
+                    color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                  },
+                  text: ['High', 'Low'],
+                  calculable: true
+                },
+                series: [
+                  {
+                    id: 'population',
+                    type: 'map',
+                    roam: true,
+                    map: 'world',
+                    animationDurationUpdate: 1000,
+                    universalTransition: true,
+                    data: data
+                  }
+                ]
+              };
+              const barOption = {
+                xAxis: {
+                  type: 'value'
+                },
+                yAxis: {
+                  type: 'category',
+                  axisLabel: {
+                    rotate: 30
+                  },
+                  data: data.map(function (item) {
+                    return item.name;
+                  })
+                },
+                animationDurationUpdate: 1000,
+                series: {
+                  type: 'bar',
+                  id: 'population',
+                  data: data.map(function (item) {
+                    return item.value;
+                  }),
+                  universalTransition: true
+                }
+              };
+              let currentOption = mapOption;
+              myChart.setOption(mapOption);
+              setInterval(function () {
+                currentOption = currentOption === mapOption ? barOption : mapOption;
+                myChart.setOption(currentOption, true);
+              }, 20000);
+            });
+
+            option1 && myChart.setOption(option1);
+
+        </script>
+        </div>
+    </section><!-- End Counts Section -->
+
+
+
+          <section class="counts section-bg">
+      <div class="container">
+            <div class="section-title">
+                <h2>评分与情感得分</h2>
+            </div>
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="comments_score_data" style="width: 100%;height:500px"></div>
+            <script type="text/javascript">
+var chartDomcm = document.getElementById('comments_score_data');
+var myChartcm = echarts.init(chartDomcm);
+var optioncm;
+
+// See https://github.com/ecomfe/echarts-stat
+echarts.registerTransform(ecStat.transform.regression);
+const data = {{comments_score_data|tojson}};
+optioncm = {
+  dataset: [
+    {
+      source: data
+    },
+    {
+      transform: {
+        type: 'ecStat:regression'
+        // 'linear' by default.
+        // config: { method: 'linear', formulaOn: 'end'}
+      }
+    }
+  ],
+  title: {
+    text: 'Linear Regression',
+    subtext: 'By ecStat.regression',
+    sublink: 'https://github.com/ecomfe/echarts-stat',
+    left: 'center'
+  },
+  legend: {
+    bottom: 5
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'cross'
+    }
+  },
+  xAxis: {
+            min: 0.5,
+            interval: 0.02, // 设置横坐标间距为 1
+    splitLine: {
+      lineStyle: {
+        type: 'dashed'
+      }
+    }
+  },
+  yAxis: {
+              min: 6,
+            interval: 0.2,
+    splitLine: {
+      lineStyle: {
+        type: 'dashed'
+      }
+    }
+  },
+  series: [
+    {
+      name: 'scatter',
+      type: 'scatter'
+    },
+    {
+      name: 'line',
+      type: 'line',
+      datasetIndex: 1,
+      symbolSize: 0.1,
+      symbol: 'circle',
+      label: { show: true, fontSize: 16 },
+      labelLayout: { dx: -20 },
+      encode: { label: 2, tooltip: 1 }
+    }
+  ]
+};
+
+optioncm && myChartcm.setOption(optioncm);
+
+
+        </script>
+      </div>
+        </section><!-- End Counts Section -->
+
+
+
+
+                    <section class="counts section-bg">
+      <div class="container">
+            <div class="section-title">
+                <h2>想看与看过人数</h2>
+            </div>
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="movie_ww_data" style="width: 100%;height:500px"></div>
+            <script type="text/javascript">
+var chartDomww = document.getElementById('movie_ww_data');
+var myChartww = echarts.init(chartDomww);
+var optionww;
+
+// See https://github.com/ecomfe/echarts-stat
+echarts.registerTransform(ecStat.transform.regression);
+const dataww = {{movie_ww_data|tojson}};
+optionww = {
+  dataset: [
+    {
+      source: dataww
+    },
+    {
+      transform: {
+        type: 'ecStat:regression',
+        config: { method: 'polynomial', order: 3 }
+      }
+    }
+  ],
+  title: {
+    text: '18 companies net profit and main business income (million)',
+    subtext: 'By ecStat.regression',
+    sublink: 'https://github.com/ecomfe/echarts-stat',
+    left: 'center',
+    top: 16
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'cross'
+    }
+  },
+  xAxis: {
+    splitLine: {
+      lineStyle: {
+        type: 'dashed'
+      }
+    },
+    splitNumber: 10
+  },
+  yAxis: {
+    min: -40,
+    splitLine: {
+      lineStyle: {
+        type: 'dashed'
+      }
+    }
+  },
+  series: [
+    {
+      name: 'scatter',
+      type: 'scatter'
+    },
+    {
+      name: 'line',
+      type: 'line',
+      smooth: true,
+      datasetIndex: 1,
+      symbolSize: 0.1,
+      symbol: 'circle',
+      label: { show: true, fontSize: 16 },
+      labelLayout: { dx: -20 },
+      encode: { label: 2, tooltip: 1 }
+    }
+  ]
+};
+
+
+optionww && myChartww.setOption(optionww);
+
+
+        </script>
+      </div>
+        </section><!-- End Counts Section -->
+
+
+
+      </div>
+    </section><!-- End Our Team Section -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>T</span></strong>. All Rights Reserved
+      </div>
+    
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="static/assets/vendor/jquery/jquery.min.js"></script>
+  <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="static/assets/vendor/jquery-sticky/jquery.sticky.js"></script>
+  <script src="static/assets/vendor/venobox/venobox.min.js"></script>
+  <script src="static/assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="static/assets/vendor/counterup/counterup.min.js"></script>
+  <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="static/assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="static/assets/js/main.js"></script>
+
+</body>
+
+</html>

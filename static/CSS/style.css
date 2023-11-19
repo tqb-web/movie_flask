@@ -1,0 +1,336 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.box {
+  position: fixed;
+  background-color: rgb(51, 32, 108);
+  width: 100vw;
+  height: 100vh;
+}
+.box .content {
+  width: 90vw;
+  height: 85vh;
+  background-color: rgb(228, 218, 232);
+  border-radius: 40px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: 1s;
+}
+.box .content .images {
+  margin-left: -150px;
+  margin-right: 100px;
+  position: absolute;
+  left: 15%;
+}
+.box .content .login-img {
+  width: 45%;
+  height: 90%;
+  border-radius: 15%;
+}
+.box .content .register-img {
+  width: 45%;
+  opacity: 0;
+  border-radius: 15%;
+}
+.box .content .login-wrapper {
+  width: 30vw;
+  height: 70vh;
+  border-radius: 40px;
+  -webkit-backdrop-filter: blur(1px);
+          backdrop-filter: blur(1px);
+  background: rgba(244, 240, 245, 0.6);
+  padding: 60px;
+  box-sizing: border-box;
+  position: absolute;
+  right: 10%;
+  transition: 1s;
+}
+.box .content .login-wrapper .top-tips span:nth-child(1) {
+  font-size: 25px;
+  font-weight: 600;
+}
+.box .content .login-wrapper .top-tips .top-tips-span {
+  font-size: 15px;
+  color: rgb(79, 133, 226);
+  border-bottom: 1px solid rgb(79, 133, 226);
+  float: right;
+  line-height: 25px;
+  cursor: pointer;
+}
+.box .content .login-wrapper h1 {
+  font-size: 45px;
+  margin: 20px 0;
+}
+.box .content .login-wrapper .other-login {
+  width: 60%;
+  height: 50px;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 20px;
+  color: #fff;
+  margin: 40px 0;
+  background-color: rgb(79, 133, 226);
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+.box .content .login-wrapper .other-login a{
+  color: #fff;/* 设置链接颜色 */
+  text-decoration: none; /* 取消下划线 */
+  cursor: pointer; /* 设置手形光标 */
+}
+
+
+.box .content .login-wrapper .other-login img {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+.box .content .login-wrapper .other-login span {
+  vertical-align: middle;
+}
+.box .content .login-wrapper .login-form,
+.box .content .login-wrapper .register-form {
+  width: 100%;
+}
+.box .content .login-wrapper .login-form .form-item .text-tips,
+.box .content .login-wrapper .register-form .form-item .text-tips {
+  color: rgb(123, 122, 123);
+  margin: 5px;
+}
+.box .content .login-wrapper .login-form .form-item .text-tips .forgot-password,
+.box .content .login-wrapper .register-form .form-item .text-tips .forgot-password {
+  font-size: 15px;
+  color: rgb(79, 133, 226);
+  border-bottom: 1px solid rgb(79, 133, 226);
+  float: right;
+  line-height: 25px;
+  cursor: pointer;
+}
+.box .content .login-wrapper .login-form .form-item input,
+.box .content .login-wrapper .register-form .form-item input {
+  width: 100%;
+  height: 50px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 0;
+  font-size: 17px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  /*display: inline-block;*/
+}
+.box .content .login-wrapper .login-form .form-item input:focus,
+.box .content .login-wrapper .register-form .form-item input:focus {
+  outline: none;
+  border: 1px solid rgb(79, 133, 226);
+}
+.box .content .login-wrapper .login-form .btn,
+.box .content .login-wrapper .register-form .btn {
+  width: 150px;
+  height: 50px;
+  margin: 20px 0;
+  background-color: rgb(59, 58, 59);
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+.box .content .login-wrapper .login-form {
+  display: block;
+}
+.box .content .login-wrapper .register-form {
+  display: none;
+}
+
+.add-class-content {
+  background-color: rgb(156, 148, 208) !important;
+  transition: 0.1s;
+}
+
+.add-class-login-img {
+  -webkit-animation: disappear 0.3s forwards;
+          animation: disappear 0.3s forwards;
+  -webkit-animation-timing-function: ease;
+          animation-timing-function: ease;
+}
+
+.add-class-login-img-show {
+  -webkit-animation-delay: 1s;
+          animation-delay: 1s;
+  -webkit-animation: appear 1s forwards;
+          animation: appear 1s forwards;
+  -webkit-animation-timing-function: ease;
+          animation-timing-function: ease;
+}
+
+.add-class-register-img {
+  -webkit-animation: appear 1s forwards;
+          animation: appear 1s forwards;
+  -webkit-animation-timing-function: ease;
+          animation-timing-function: ease;
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s;
+}
+
+.error-message {
+  position: fixed;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: #f44336;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 100;
+}
+
+.error-message.show {
+  opacity: 1;
+}
+
+@-webkit-keyframes appear {
+  from {
+    border-radius: 15%;
+    opacity: 0;
+  }
+  to {
+    border-radius: 0%;
+    opacity: 1;
+  }
+}
+
+@keyframes appear {
+  from {
+    border-radius: 15%;
+    opacity: 0;
+  }
+  to {
+    border-radius: 0%;
+    opacity: 1;
+  }
+}
+@-webkit-keyframes disappear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes disappear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}/*# sourceMappingURL=style.css.map */
+@media screen and (max-width: 300px) {
+			span.psw {
+				display: block;
+				float: none;
+			}
+			.cancelbtn {
+				width: 100%;
+			}
+		}
+
+
+@media (max-width: 767px) {
+.box {
+  position: fixed;
+  background-color: rgb(51, 32, 108);
+  width: 100%;
+  height: 100%;
+}
+.box .content {
+  width: 90%;
+  height: 95%;
+  background-color: rgb(228, 218, 232);
+  border-radius: 40px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: 1s;
+}
+.box .content .images {
+  margin-left: -150px;
+  margin-right: 100px;
+  position: absolute;
+  left: 15%;
+}
+.box .content .login-img {
+  width: 45%;
+  height: 90%;
+  border-radius: 15%;
+}
+.box .content .register-img {
+  width: 45%;
+  opacity: 0;
+  border-radius: 15%;
+}
+.box .content .login-wrapper {
+  width: 81%;
+  height: 84%;
+  border-radius: 40px;
+  -webkit-backdrop-filter: blur(1px);
+          backdrop-filter: blur(1px);
+  background: rgba(244, 240, 245, 0.6);
+  padding: 15px;
+  padding-top: 17%;
+  box-sizing: border-box;
+  position: absolute;
+  transition: 1s;
+}
+
+.box .content .login-wrapper h1 {
+  font-size: 35px;
+  margin: 20px 0;
+}
+
+
+.box .content .login-wrapper .login-form .btn,
+.box .content .login-wrapper .register-form .btn {
+  width: 150px;
+  height: 50px;
+  margin: 20px 0;
+  background-color: rgb(59, 58, 59);
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+}
+
+@media (min-width: 768px) and (max-width: 1400px) {
+.box .content .login-wrapper {
+  width: 50%;
+  height: 60%;
+  border-radius: 40px;
+  -webkit-backdrop-filter: blur(1px);
+          backdrop-filter: blur(1px);
+  background: rgba(244, 240, 245, 0.6);
+  padding: 60px;
+  box-sizing: border-box;
+  position: absolute;
+  right: 10%;
+  transition: 1s;
+}
+}
