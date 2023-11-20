@@ -39,7 +39,7 @@
 
 ## 页面展示
 
-![index](./static\assets\img\page\index.png?msec=1700402701466)
+![index](./static/assets/img/page/index.png)
 ![movie](./static\assets\img\page\movie.png?msec=1700402701475)
 ![chart](./static\assets\img\page\chart.png?msec=1700402701468)
 ![wordcloud](./static\assets\img\page\wordcloud.png?msec=1700402701480)
