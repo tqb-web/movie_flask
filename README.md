@@ -39,12 +39,12 @@
 
 ## 页面展示
 
-![index](file://myflask1\static\assets\img\page\index.png?msec=1700402701466)
-![movie](file://myflask1\static\assets\img\page\movie.png?msec=1700402701475)
-![chart](file://myflask1\static\assets\img\page\chart.png?msec=1700402701468)
-![wordcloud](file://myflask1\static\assets\img\page\wordcloud.png?msec=1700402701480)
-![askQuestion](file://myflask1\static\assets\img\page\askQuestion.png?msec=1700402701466)
-![compare](file://myflask1\static\assets\img\page\compare.png?msec=1700402701475)
-![info](file://myflask1\static\assets\img\page\info.png?msec=1700402701468)
-![sentiment](file://myflask1\static\assets\img\page\sentiment.png?msec=1700402701480)
+![index](file:\static\assets\img\page\index.png?msec=1700402701466)
+![movie](file:\static\assets\img\page\movie.png?msec=1700402701475)
+![chart](file:\static\assets\img\page\chart.png?msec=1700402701468)
+![wordcloud](file:\static\assets\img\page\wordcloud.png?msec=1700402701480)
+![askQuestion](file:\static\assets\img\page\askQuestion.png?msec=1700402701466)
+![compare](file:\static\assets\img\page\compare.png?msec=1700402701475)
+![info](file:\static\assets\img\page\info.png?msec=1700402701468)
+![sentiment](file:\static\assets\img\page\sentiment.png?msec=1700402701480)
 
