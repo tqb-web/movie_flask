@@ -39,12 +39,12 @@
 
 ## 页面展示
 
-![index](file:\static\assets\img\page\index.png?msec=1700402701466)
-![movie](file:\static\assets\img\page\movie.png?msec=1700402701475)
-![chart](file:\static\assets\img\page\chart.png?msec=1700402701468)
-![wordcloud](file:\static\assets\img\page\wordcloud.png?msec=1700402701480)
-![askQuestion](file:\static\assets\img\page\askQuestion.png?msec=1700402701466)
-![compare](file:\static\assets\img\page\compare.png?msec=1700402701475)
-![info](file:\static\assets\img\page\info.png?msec=1700402701468)
-![sentiment](file:\static\assets\img\page\sentiment.png?msec=1700402701480)
+![index](static\assets\img\page\index.png?msec=1700402701466)
+![movie](static\assets\img\page\movie.png?msec=1700402701475)
+![chart](static\assets\img\page\chart.png?msec=1700402701468)
+![wordcloud](static\assets\img\page\wordcloud.png?msec=1700402701480)
+![askQuestion](static\assets\img\page\askQuestion.png?msec=1700402701466)
+![compare](static\assets\img\page\compare.png?msec=1700402701475)
+![info](static\assets\img\page\info.png?msec=1700402701468)
+![sentiment](static\assets\img\page\sentiment.png?msec=1700402701480)
 
