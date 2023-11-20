@@ -1,6 +1,0 @@
-jieba
-Flask
-Flask-Login
-Pillow
-flask_cors
-fuzzywuzzy
