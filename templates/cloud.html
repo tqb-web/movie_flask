@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>豆瓣电影数据分析</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="static/assets/img/favicon.png" rel="icon">
+  <link href="static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+
+  <!-- Vendor CSS Files -->
+  <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="static/assets/css/style.css" rel="stylesheet">
+    <link href="static/assets/css/personInfo.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+      /* 设置 h1 标题的样式 */
+      h1 {
+        font-size: 24px;
+        color: #000;
+        margin-bottom: 10px;
+      }
+
+       h2 {
+        font-size: 24px;
+        color: #000;
+        margin-bottom: 10px;
+        margin-left: 30px;
+      }
+
+      /* 设置输入框和按钮容器的样式 */
+      .input-container {
+        margin-bottom: 20px;
+      }
+
+      /* 设置输入框的样式 */
+      #movieNameInput {
+        width: 200px;
+        height: 38px;
+        font-size: 18px;
+        padding: 5px 10px;
+        border: 1px solid #000;
+        margin-right: 10px;
+        margin-left: 10px;
+      }
+
+      /* 设置按钮的样式 */
+      button {
+        font-size: 18px;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+
+      /* 设置词云图容器的样式 */
+      .wordcloud-row {
+        display: flex;
+      }
+
+      .wordcloud-container {
+        flex: 1;
+
+      }
+  /* 设置容器的样式，使用 flex 排列元素 */
+  .container10 {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+  }
+
+  #movieNameDiv {
+  font-weight: bold;
+  color: black;
+  text-align: center; /* 水平居中 */
+  position: absolute; /* 绝对定位 */
+  top: 30%; /* 垂直居中 */
+  left: 50%; /* 水平居中 */
+  transform: translate(-50%, -50%); /* 居中 */
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container">
+
+      <div class="logo float-left">
+        <h1 class="text-light"><a href="#" style="color: white;"><span>词云图</span></a></h1>
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="/index" style="color: white;">首页<i class="la la-angle-down"></i></a></li>
+          <li><a href="/movie" style="color: white;">电影</a></li>
+          <li><a href="/score" style="color: white;">评分</a></li>
+          <li><a href="/cloud" style="color: white;">词云</a></li>
+          <li><a href="/aboutMe" style="color: white;">关于我</a></li>
+
+            <li><div class="dropdown">
+              <button class="button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ url_for('get_avatar') }}" alt="avatar" class="avatar" id="avatar">
+              </button>
+              <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/personInfo">个人信息</a>
+                <form method="post" action="/logout">
+                  <button class="dropdown-item" type="submit">退出登录</button>
+                </form>
+              </div>
+            </div></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+
+     <!-- ======= Our Team Section ======= -->
+    <section id="team" class="team">
+      <div class="container10">
+          <h2>输入电影名称</h2>
+    <div class="input-container">
+      <input type="text" id="movieNameInput">
+      <button onclick="generateWordCloud()">生成词云图</button>
+    </div>
+          <div id="movieNameDiv"></div>
+    <div class="wordcloud-row">
+      <div id="wordCloudContainer1" class="wordcloud-container"></div>
+      <div id="wordCloudContainer2" class="wordcloud-container"></div>
+    </div>
+
+    <script>
+      function generateWordCloud() {
+        var movieName = $("#movieNameInput").val();
+        $.ajax({
+          url: "/generate_wordcloud",
+          method: "POST",
+          data: {"movie_name": movieName},
+          success: function(data) {
+            // 在页面上显示生成的词云图
+            $("#wordCloudContainer1").html(data.wordcloud);
+            $("#wordCloudContainer2").html(data.wordcloud1);
+
+            // 显示电影名称
+            var movieNameDiv = document.getElementById("movieNameDiv");
+            movieNameDiv.innerHTML = movieName + "词云图";
+          },
+          error: function(error) {
+            console.error("生成词云图失败", error);
+          }
+        });
+      }
+    </script>
+
+      </div>
+    </section><!-- End Our Team Section -->
+
+
+
+
+<!--  &lt;!&ndash; ======= Footer ======= &ndash;&gt;-->
+<!--  <footer id="footer">-->
+
+<!--    <div class="container">-->
+<!--      <div class="copyright">-->
+<!--        &copy; Copyright <strong><span>T</span></strong>. All Rights Reserved-->
+<!--      </div>-->
+
+<!--    </div>-->
+<!--  </footer>&lt;!&ndash; End Footer &ndash;&gt;-->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="static/assets/vendor/jquery/jquery.min.js"></script>
+  <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="static/assets/vendor/jquery-sticky/jquery.sticky.js"></script>
+  <script src="static/assets/vendor/venobox/venobox.min.js"></script>
+  <script src="static/assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="static/assets/vendor/counterup/counterup.min.js"></script>
+  <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="static/assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="static/assets/js/main.js"></script>
+
+</body>
+
+</html>

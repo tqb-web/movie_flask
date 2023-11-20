@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+ <title>电影搜索</title>
+      <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="static/assets/img/favicon.png" rel="icon">
+  <link href="static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+
+  <!-- Vendor CSS Files -->
+  <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="static/assets/css/style.css" rel="stylesheet">
+        <link href="static/assets/css/personInfo.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      /* 设置表单元素的样式 */
+    form {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 21px;
+        border-radius: 5px;
+        width: 98%;
+        margin: auto;
+    }
+    label {
+        display: inline-block;
+        width: 100px;
+        margin-bottom: 10px;
+    }
+    input[type="text"], input[type="number"], select {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        width: 200px;
+        margin-bottom: 10px;
+    }
+    input[type="submit"] {
+        background-color: #2f292c;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    table {
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        width: 100%;
+        text-align: center;
+
+    }
+
+    th, td {
+        text-align: center;
+        padding: 8px;
+    }
+
+    .modal-body td {
+      text-align: left;
+    }
+
+    th {
+        background-color: #2f292c;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+    h1 {
+        text-align: center;
+    }
+</style>
+
+</head>
+<body>
+<!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container">
+
+      <div class="logo float-left">
+        <h1 class="text-light"><a href="#" style="color: white;"><span>搜索</span></a></h1>
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="/index" style="color: white;">首页<i class="la la-angle-down"></i></a></li>
+          <li><a href="/movie" style="color: white;">电影</a></li>
+          <li><a href="/score" style="color: white;">评分</a></li>
+          <li><a href="/cloud" style="color: white;">词云</a></li>
+          <li><a href="/aboutMe" style="color: white;">关于我</a></li>
+
+            <li><div class="dropdown">
+              <button class="button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ url_for('get_avatar') }}" alt="avatar" class="avatar" id="avatar">
+              </button>
+              <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/personInfo">个人信息</a>
+                <form method="post" action="/logout">
+                  <button class="dropdown-item" type="submit">退出登录</button>
+                </form>
+              </div>
+            </div></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+<h1>电影搜索</h1>
+<form id="search-form">
+    <label for="keyword">搜索关键字：</label>
+    <input type="text" name="keyword" id="keyword" placeholder="请输入搜索关键字">
+    <br>
+    <label for="category">电影类型：</label>
+    <select name="category" id="category">
+        <option value="">--请选择电影类型--</option>
+        <option value="动作">动作</option>
+        <option value="喜剧">喜剧</option>
+        <option value="恐怖">恐怖</option>
+        <option value="爱情">爱情</option>
+        <option value="动画">动画</option>
+        <option value="犯罪">犯罪</option>
+        <option value="冒险">冒险</option>
+        <option value="奇幻">奇幻</option>
+        <option value="惊悚">惊悚</option>
+        <option value="悬疑">悬疑</option>
+        <option value="科幻">科幻</option>
+        <option value="家庭">家庭</option>
+        <option value="战争">战争</option>
+        <option value="历史">历史</option>
+        <option value="同性">同性</option>
+        <option value="纪录片">纪录片</option>
+        <option value="短片">短片</option>
+        <option value="音乐">音乐</option>
+        <option value="古装">古装</option>
+        <option value="情色">情色</option>
+        <option value="歌舞">歌舞</option>
+        <option value="运动">运动</option>
+        <option value="武侠">武侠</option>
+        <option value="儿童">儿童</option>
+        <option value="西部">西部</option>
+        <option value="灾难">灾难</option>
+        <option value="黑色电影">黑色电影</option>
+    </select>
+        &emsp;<label for="category">电影地区：</label>
+    <select name="country" id="country">
+        <option value="">--请选择电影地区--</option>
+        <option value="中国">中国</option>
+        <option value="美国">美国</option>
+        <option value="英国">英国</option>
+        <option value="韩国">韩国</option>
+    </select>
+    <br>
+    <label for="movie_score">最低评分：</label>
+    <input type="number" name="movie_score" id="movie_score" value="0" min="0" max="10" step="0.1">
+    &emsp;<label for="movie_year">上映时间：</label>
+    <input type="number" name="movie_year" id="movie_year" value="" min="1931" max="2023" step="1">
+    <br>
+    <label for="movie_vote">最低票房：</label>
+    <input type="number" name="movie_vote" id="movie_vote" value="0" min="0">
+    <br>
+    <label for="limit">结果数量：</label>
+    <input type="number" name="limit" id="limit" value="10" min="1" max="100">
+    <br>
+    <input type="submit" value="搜索">
+</form>
+
+
+<h1>搜索结果</h1>
+<p>共找到 <span id="result-count"></span> 部符合条件的电影。</p>
+<table id="result-table">
+    <thead>
+    <tr>
+                  <th style="width:15%;">电影名称</th>
+                  <th style="width:15%;">上映时间</th>
+                  <th style="width:5%;">票房</th>
+                  <th style="width:5%;">评分</th>
+                  <th style="width:20%;">类型</th>
+                  <th style="width:14%;">地区</th>
+			      <th style="width:8%;">评论数量</th>
+                  <th style="width:8%;">评价数量</th>
+                  <th style="width:10%;">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script>
+    $(function () {
+        $('#search-form').submit(function (event) {
+            event.preventDefault(); // 阻止表单的默认提交行为
+
+            var formData = $(this).serialize(); // 将表单数据序列化为 URL 编码的字符串
+
+            $.ajax({
+                url: '/search_results', // 提交表单的目标 URL
+                data: formData,
+                dataType: 'json', // 告诉 jQuery 期望服务器返回的数据类型为 JSON
+                success: function (data) {
+                    $('#result-count').text(data.length);
+
+                    var tbody = $('#result-table tbody');
+                    tbody.empty();
+
+                    $.each(data, function (index, movie) {
+                    // 创建超链接元素
+                        var link = $('<a>').attr('href', movie[6]).text(movie[2]);
+                        var row = $('<tr>');
+                        row.append($('<td>').append(link));  // 添加超链接单元格
+                        row.append($('<td>').text(movie[3]));
+                        row.append($('<td>').text(movie[4]));
+                        row.append($('<td>').text(movie[5]));
+                        row.append($('<td>').text(movie[7]));
+                        row.append($('<td>').text(movie[8]));
+                        row.append($('<td>').text(movie[9]));
+                        row.append($('<td>').text(movie[10]));
+
+                        var actions = $('<td>');
+                        var detailsBtn = $('<button>').text('详细信息').addClass('btn btn-info');
+               detailsBtn.click(function () {
+                  // 创建模态框
+                  var modal = $('<div>').addClass('modal');
+                  var modalContent = $('<div>').addClass('modal-content');
+                  var modalHeader = $('<div>').addClass('modal-header');
+                  var modalTitle = $('<h5>').text(movie[2]).addClass('modal-title');
+                  var closeButton = $('<button>').html('&times;').addClass('close').attr('data-dismiss', 'modal');
+                  modalHeader.append(modalTitle).append(closeButton);
+                  var modalBody = $('<div>').addClass('modal-body');
+                  // 创建电影详细信息的表格
+                  var detailTable = $('<table>').addClass('table');
+                  var detailTbody = $('<tbody>');
+                  var directorRow = $('<tr>').append($('<td>').text('导演：')).append($('<td>').text(movie[12]));
+                  var actorRow = $('<tr>').append($('<td>').text('演员：')).append($('<td>').text(movie[11]));
+                  var summaryRow = $('<tr>').
+                append($('<td>').text('总结：')).append($('<td>').text(movie[15]));
+                detailTbody.append(directorRow).append(actorRow).append(summaryRow);
+                detailTable.append(detailTbody);
+                modalBody.append(detailTable);
+                modalContent.append(modalHeader).append(modalBody);
+                modal.append(modalContent);
+                // 显示模态框
+                $('body').append(modal);
+                modal.modal('show');
+                });
+                        actions.append(detailsBtn);
+                        row.append(actions);
+                        tbody.append(row);
+                    });
+                },
+                error: function () {
+                    alert('搜索电影出错了，请稍后再试！');
+                }
+            });
+        });
+    });
+</script>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>T</span></strong>. All Rights Reserved
+      </div>
+
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="static/assets/vendor/jquery/jquery.min.js"></script>
+  <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="static/assets/vendor/jquery-sticky/jquery.sticky.js"></script>
+  <script src="static/assets/vendor/venobox/venobox.min.js"></script>
+  <script src="static/assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="static/assets/vendor/counterup/counterup.min.js"></script>
+  <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="static/assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="static/assets/js/main.js"></script>
+
+</body>

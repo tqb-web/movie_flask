@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="">
+<head>
+    <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>历史问答</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="static/assets/img/favicon.png" rel="icon">
+  <link href="static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Template Main CSS File -->
+  <link href="static/assets/css/style.css" rel="stylesheet">
+    <link href="static/assets/css/chat.css" rel="stylesheet">
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+      .t{
+      width: 80%;
+      margin-left:20%;
+      }
+
+		/* 大屏幕设备样式 */
+		@media only screen and (min-width: 768px) {
+		    #header {
+		        display: none;
+		        }
+			.nav-menu {
+				display: none;
+			}
+			  .logo {
+                display: none;
+            }
+            .text-light {
+                display: none;
+                }
+
+            .container {
+                display: none;
+                }
+            .ul {
+            display: none;
+            }
+            .li {
+            display: none;
+            }
+            .nav {
+            display :none;
+            }
+		}
+
+ 		table {
+			  margin-left: 2%;
+              margin-top: 0%;
+			border-collapse: collapse;
+			width: 95%;
+
+			background-color: white;
+			box-shadow: 0px 0px 10px #bbb;
+			border-radius: 5px;
+			overflow: hidden;
+		}
+		th, td {
+			padding: 15px;
+			text-align: center;
+			border: 1px solid #ddd;
+			font-size: 18px;
+		}
+		th {
+			background-color: #f2f2f2;
+			font-weight: bold;
+			color: #555;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+		tr:nth-child(even) {
+			background-color: #f9f9f9;
+		}
+		td:last-child {
+			padding: 5px;
+		}
+		button {
+			background-color: #007bff;
+			color: white;
+			border: none;
+			padding: 8px 20px;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+		button:hover {
+			background-color: #0069d9;
+		}
+		@media only screen and (max-width: 768px) {
+
+  #navigation {
+    width: 0px;
+    height: 0px;
+    position: static;
+    border-right: none;
+  }
+        .t{
+      width: 100%;
+      margin-top: 16%;
+      margin-left: 0;
+      }
+  }
+
+</style>
+
+</head>
+
+
+<body>
+    <div class="container">
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li><a href="/index">首页<i class="la la-angle-down"></i></a></li>
+          <li><a href="/movie">电影</a></li>
+          <li><a href="/score">评分</a></li>
+          <li class="active"><a href="/cloud">词云</a></li>
+                  <li><a href="/answerQuestion">智能问答</a></li>
+          <li><a href="/aboutMe">关于我</a></li>
+        </ul>
+      </nav>
+
+    </div>
+
+<div>
+<div id="navigation">
+  <ul>
+    <li><a href="/index">首页</a></li>
+    <li><a href="/movie">豆瓣TOP250</a></li>
+    <li><a href="/pMovie">电影详情</a></li>
+      <li><a href="/score">可视化</a></li>
+       <li><a href="/cloud">词云图</a></li>
+      <li><a href="/answerQuestion">智能问答</a></li>
+      <li><a href="/aboutMe">关于我</a></li>
+  </ul>
+</div>
+
+      <div class = "t">
+          <table>
+              <tr>
+                  <td style="width:25%;">问题</td>
+                  <td style="width:55%;">回答</td>
+                  <td style="width:20%;">日期</td>
+              </tr>
+              {% for question in questions %}
+              <tr>
+                  <td>{{ question.question }}</td>
+                  <td>{{ question.answer }}</td>
+                  <td>{{ question.time }}</td>
+              </tr>
+              {% endfor %}
+          </table>
+        </div>
+</div>
+
+  <!-- Vendor JS Files -->
+  <script src="static/assets/vendor/jquery/jquery.min.js"></script>
+  <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="static/assets/vendor/jquery-sticky/jquery.sticky.js"></script>
+  <script src="static/assets/vendor/venobox/venobox.min.js"></script>
+  <script src="static/assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="static/assets/vendor/counterup/counterup.min.js"></script>
+  <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="static/assets/vendor/aos/aos.js"></script>
+      <!-- Vendor CSS Files -->
+  <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main JS File -->
+  <script src="static/assets/js/main.js"></script>
+</body>
+</html>
