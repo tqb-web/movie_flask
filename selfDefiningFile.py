@@ -46,3 +46,4 @@ n = 10
 fibonacci_sequence = generate_fibonacci(n)
 print(f"前 {n} 个斐波那契数列为: {fibonacci_sequence}")
 
+print('ceshi')
