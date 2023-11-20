@@ -19,23 +19,22 @@
 
 │ requirements.txt ----- 依赖包环境版本
 
-
 ├─static ----- 静态页面
 
 ├─templates ----- HTML页面
 
 └─venv ----- 虚拟环境
 
-
 **运行方式：直接运行app.py**
 
 默认账号管理员：**tcurry**  
 密码：**h12345678**
 
+**由于github限制，电影数据无法完整上传，想要完整数据的请联系。**
+
 目前仅上传了可视化代码，爬虫代码有时间再整理上传，后续将持续更新...
 
 有任何问题请联系**QQ1797834904**
-
 
 ## 页面展示
 
@@ -47,4 +46,3 @@
 ![compare](./static/assets/img/page/compare.png)
 ![info](./static\assets\img\page\info.png)
 ![sentiment](./static/assets/img/page/sentiment.png)
-
