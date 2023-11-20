@@ -12,3 +12,14 @@ with open('./selfDefiningTxt.txt', 'w', encoding='utf-8') as f:
     for name in movieNameLst:
         f.write(name + ' 100 tqb')
         f.write('\n')
+
+# 获取用户输入的两个数字
+num1 = float(input("请输入第一个数字: "))
+num2 = float(input("请输入第二个数字: "))
+
+# 计算两个数字的和
+sum = num1 + num2
+
+# 输出结果
+print(f"{num1} + {num2} = {sum}")
+
