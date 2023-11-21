@@ -14,36 +14,4 @@ with open('./selfDefiningTxt.txt', 'w', encoding='utf-8') as f:
         f.write('\n')
 
 
-# 获取用户输入的两个数字
-num1 = float(input("请输入第一个数字: "))
-num2 = float(input("请输入第二个数字: "))
 
-# 计算两个数字的和
-sum = num1 + num2
-
-# 输出结果
-print(f"{num1} + {num2} = {sum}")
-
-
-def generate_fibonacci(n):
-    fibonacci_sequence = [0, 1]  # 初始的斐波那契序列
-
-    if n <= 0:
-        return []
-    elif n == 1:
-        return [0]
-    elif n == 2:
-        return [0, 1]
-
-    while len(fibonacci_sequence) < n:
-        next_number = fibonacci_sequence[-1] + fibonacci_sequence[-2]
-        fibonacci_sequence.append(next_number)
-
-    return fibonacci_sequence
-
-# 打印前 10 个斐波那契数
-n = 10
-fibonacci_sequence = generate_fibonacci(n)
-print(f"前 {n} 个斐波那契数列为: {fibonacci_sequence}")
-
-print('ceshi')
