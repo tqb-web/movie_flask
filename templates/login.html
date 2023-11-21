@@ -126,7 +126,7 @@
                 }
                 $.ajax({
                     type: "POST",
-                    url: "{{ url_for('check_username') }}",
+                    url: "{{ url_for('user_validation.check_username') }}",
                     data: {"username": username},
                     dataType: "json",
                     success: function(response) {

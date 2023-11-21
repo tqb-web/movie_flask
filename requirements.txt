@@ -4,3 +4,4 @@ Flask-Login
 Pillow
 flask_cors
 fuzzywuzzy
+pandas

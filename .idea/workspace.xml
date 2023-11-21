@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b428f747-c5fe-4e33-9582-f41bcdd2d83e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/selfDefiningFile.py" beforeDir="false" afterPath="$PROJECT_DIR$/selfDefiningFile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/cloud.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/cloud.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/pythonMovie.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/pythonMovie.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/userInfo.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/userInfo.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neo4jCreate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +62,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/桌面/论文/douban_movies_top250-master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/maskrcnn_project/myflask - 副本 (2)&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
