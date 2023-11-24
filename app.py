@@ -1,3 +1,4 @@
+# 导入必要的库
 import sqlite3
 
 import jieba
@@ -17,16 +18,19 @@ from user_validation import user_validation_bp
 from wordcloud import wordcloud_bp
 from other_functions import other_functions_bp
 
+# 创建 Flask 应用
 app = Flask(__name__)
 jieba.load_userdict('./selfDefiningTxt.txt')
 
 # 允许所有域名访问
 CORS(app)
 
+# 设置 Flask 应用的密钥和登录管理器
 app.secret_key = 'tianqingbin'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+# 注册蓝图
 app.register_blueprint(signup_login_bp)
 app.register_blueprint(user_validation_bp)
 app.register_blueprint(movies_bp)
@@ -38,6 +42,7 @@ app.register_blueprint(compare_bp)
 app.register_blueprint(other_functions_bp)
 
 
+# 首页路由
 @app.route("/")
 def home():
     return render_template("login.html")
@@ -90,14 +95,15 @@ def aboutMe():
     return render_template("aboutMe.html")
 
 
-
-
 @login_manager.user_loader
 def load_user(user_id):
+    # 连接用户信息数据库
     conn = sqlite3.connect('database/userInfo.db')
     c = conn.cursor()
+    # 查询用户信息
     c.execute('SELECT * FROM usertable WHERE id = ?', (user_id,))
     result = c.fetchone()
+    # 关闭数据库连接
     c.close()
     conn.close()
     if result:
@@ -114,6 +120,7 @@ def load_user(user_id):
         return None
 
 
+# 数据合并函数
 def combine(keys, values):
     res = []
 

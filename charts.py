@@ -1,10 +1,13 @@
+# 导入所需的模块和类
 from flask import Blueprint, render_template, jsonify, request
 from flask_login import login_required
 import sqlite3
 
+# 创建图表的 Blueprint
 charts_bp = Blueprint('charts', __name__)
 
 
+# 定义详细图表的路由
 @charts_bp.route('/detailed_charts')
 @login_required
 def detailed_charts():
