@@ -13,7 +13,6 @@ signup_login_bp = Blueprint('signup_login', __name__)
 
 
 @signup_login_bp.route('/register', methods=["POST"])
-# @app.route("/register", methods=["POST"])
 def register():
     db = sqlite3.connect("database/userInfo.db")
     username = request.form["username"]
