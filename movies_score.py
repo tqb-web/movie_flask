@@ -10,36 +10,12 @@ movies_score_bp = Blueprint('movies_score', __name__)
 @movies_score_bp.route('/score')
 @login_required
 def score():
-    score1 = []  # 评分
-    num1 = []  # 每个评分所统计出的电影数量
-    movie_year1 = []  # 年份
-    movie_num1 = []  # 每个年份所统计出的电影数量
     movie_year2 = []  # 年份
     movie_num2 = []  # 每个年份所统计出的电影数量
     score2 = []
     num2 = []
-    res1 = {}
     res2 = {}
     res3 = {}
-    con = sqlite3.connect("database/movie.db")
-    cur = con.cursor()
-    sql = "select score,count(score) from movie250 group by score"
-    # res1 = dict(cur.fetchall())
-    data = cur.execute(sql)
-    for item1 in data:
-        score1.append(str(item1[0]))
-        num1.append(item1[1])
-    for k, v in zip(score1, num1):
-        res1.update({k: v, }, )
-
-    sql2 = "select year_release,count(year_release) from movie250 group by year_release"
-    data2 = cur.execute(sql2)
-    for item2 in data2:
-        movie_year1.append(str(item2[0]))
-        movie_num1.append(item2[1])
-
-    cur.close()
-    con.close()
 
     con = sqlite3.connect("database/pythonMovie.db")
     cur = con.cursor()
@@ -231,8 +207,7 @@ def score():
     movie_ww_data = [[x[0], x[1]] for x in movie_ww_data]
     con.close()
 
-    return render_template("score.html", score1=score1, num1=num1, res1=res1, movie_num1=movie_num1,
-                           movie_year1=movie_year1,
+    return render_template("score.html",
                            num2=num2, score2=score2, res2=res2, movie_num2=movie_num2, movie_year2=movie_year2,
                            res3=res3, movie_country=movie_country, nums_country=nums_country,
                            movie_category=movie_category, nums_category=nums_category, sandians=sandian,

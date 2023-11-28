@@ -8,22 +8,7 @@ movies_bp = Blueprint('movies', __name__)
 @movies_bp.route('/movie')
 @login_required
 def movie():
-    datalist = []
-    con = sqlite3.connect("database/movie.db")
-    cur = con.cursor()
-    sql = "select * from movie250"
-    data = cur.execute(sql)
-    for item in data:
-        datalist.append(item)
-    cur.close()
-    con.close()
-    return render_template("movie.html", movies=datalist)
-
-
-@movies_bp.route('/pMovie')
-@login_required
-def pmovie():
-    return render_template("pMovie.html")
+    return render_template("movie.html")
 
 
 @movies_bp.route('/get_movies_data', methods=['POST', 'PUT', 'GET'])

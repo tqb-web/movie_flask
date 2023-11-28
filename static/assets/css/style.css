@@ -748,6 +748,7 @@ section {
   padding: 30px;
   background: #fff;
   margin-bottom: 30px;
+  border-radius: 20px;
 }
 
 .counts .count-box i {
