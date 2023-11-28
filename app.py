@@ -89,6 +89,12 @@ def team():
     return render_template("team.html")
 
 
+@app.route('/feedback')
+@login_required
+def feedback():
+    return render_template("feedback.html")
+
+
 @app.route('/aboutMe')
 @login_required
 def aboutMe():
