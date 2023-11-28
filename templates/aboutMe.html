@@ -105,9 +105,20 @@
     height: 95%;
     float: left;
     position: fixed;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
     border-radius: 20px;
     margin-bottom: 20px;
   }
+
+
+  .sidebar img {
+  width: 100px; /* 调整头像大小 */
+  height: 100px;
+  border-radius: 50%; /* 将头像设置为圆形 */
+}
 
   .content {
     width: calc(100% - 250px - 10%); /* Calculate width to leave 10% space between sidebar and content */
@@ -130,7 +141,7 @@
 
 <div class="container">
   <div class="sidebar">
-    <!-- Add your navigation items here -->
+    <img src="static/assets/img/wechat.jpg" alt="Your Avatar">
   </div>
 
   <div class="content">
@@ -154,19 +165,8 @@
 </center>
 
 
-## 姓名
+**你好，我是@T**
 
-
-## 学校
-
-
-## 专业
-
-
-## 爱好
-- 爱好1
-- 爱好2
-- 爱好3
 
 \`\`\` python
     print('hello world')
