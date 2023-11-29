@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
     <title>豆瓣解析</title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='PICTURE/dou.png') }}">
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -19,16 +19,9 @@
             <img class="register-img images" src="{{ url_for('static', filename='PICTURE/register.jpg') }}" alt="注册">
             <div class="login-wrapper">
                 <div class="top-tips">
-                    <span>welcome</span>
                     <span class="top-tips-span">注册</span>
                 </div>
                 <h1 class="h1-text">登录</h1>
-                <div class="other-login">
-                  <a href="https://www.ai.com">
-                   <img src="{{ url_for('static', filename='PICTURE/QQ.png') }}" alt="#">
-                    <span>使用QQ登录</span>
-                  </a>
-                </div>
                 <form action="/login" method="post">
                 <div class="login-form">
                     <div class="user-form form-item">
