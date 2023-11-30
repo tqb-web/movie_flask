@@ -25,6 +25,89 @@
     <script src="static/assets/js/personInfo.js"></script>
 
     <style>
+
+
+      body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url("static/assets/img/background.jpg") center/cover;
+    background-attachment: fixed;
+    background-color: #eaeaea;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+  .sidebar1 {
+    width: 15%;
+    background-color: #ffffff;
+    color: white;
+    height: 100vh; /* or the height of your content */
+    height: 60%;
+    float: left;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
+
+.sidebar1:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 15%;
+  background-color: #000000; /* 设置顶部20%的背景颜色为黑色 */
+  border-radius: 20px 20px 0 0; /* 圆角边框，可根据需要调整 */
+  z-index: -1; /* 将 z-index 设置为负值，确保它在内容之后绘制 */
+}
+
+    .sidebar2 {
+    width: 15%;
+    background-color: #ffffff;
+    color: white;
+    height: 100vh; /* or the height of your content */
+    height: 30%;
+    float: left;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    top: 65%;
+  }
+
+
+  .sidebar2 img {
+ width: 40%; /* 设置头像宽度为40% */
+  height: auto; /* 让高度自适应 */
+  border-radius: 50%; /* 将头像设置为圆形 */
+}
+
+  .content {
+    width: calc(100% - 250px - 5%); /* Calculate width to leave 10% space between sidebar and content */
+    padding: 20px;
+    border-radius: 20px;
+    margin-left: auto;
+  }
+
+  .activity-calendar, .profile-card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+
         input#username + span {
   display: none;
   color: red;
@@ -48,41 +131,92 @@
         max-height: 300px;
       }
 
+.name {
+  font-size: 18px; /* 设置姓名的字体大小 */
+  font-weight: bold; /* 设置姓名的粗细 */
+  margin-top: 10px; /* 设置姓名与图片之间的间距 */
+  color: #555555;
+}
+
+.name-top {
+  font-size: 30px; /* 设置姓名的字体大小 */
+  font-weight: bold; /* 设置姓名的粗细 */
+  margin-top: 10px;
+  text-align: center; /* 文字居中 */
+}
+
+.gender {
+  font-size: 16px; /* 设置性别的字体大小 */
+  font-style: italic; /* 设置性别的斜体 */
+  margin-top: 5px; /* 设置性别与姓名之间的间距 */
+  color: #555555;
+}
+
+
+
+.sidebar1 ul {
+  list-style: none;
+  margin: 0;
+  margin-top: 20%;
+  padding: 20px;
+}
+
+
+.sidebar1 li {
+  margin-bottom: 10px;
+}
+
+.sidebar1 a {
+  color: #555555;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px;
+  display: block;
+  border-left: 5px solid transparent;
+  transition: border-left-color .3s ease;
+}
+
+.sidebar1 a:hover {
+  border-left-color: #007bff;
+}
 
     </style>
 </head>
 <body>
 
- <header id="header">
-    <div class="container">
 
-      <div class="logo float-left">
-        <h1 class="text-light"><a href="temp.html" style="color: white;"><span>个人信息</span></a></h1>
+
+<div class="container">
+  <div class="sidebar1">
+      <div class="name-top">
+{{users[1]}}
+          </div>
+  <ul>
+    <li><a href="/index">首页</a></li>
+    <li><a href="/movie">电影</a></li>
+    <li><a href="/pMovie">电影详情</a></li>
+      <li><a href="/score">可视化</a></li>
+       <li><a href="/cloud">词云图</a></li>
+      <li><a href="/search">查找电影</a></li>
+      <li><a href="/aboutMe">关于我</a></li>
+  </ul>
+
+  </div>
+
+      <div class="sidebar2">
+          <img src="{{ url_for('get_avatar') }}">
+    <div class="name">
+    {{users[1]}}
+  </div>
+  <div class="gender">
+    {{users[5]}}
+  </div>
       </div>
 
-      <nav class="nav-menu float-right d-none d-lg-block">
-        <ul>
-          <li class="active"><a href="/index" style="color: white;">首页<i class="la la-angle-down"></i></a></li>
-          <li><a href="/movie" style="color: white;">电影</a></li>
-          <li><a href="/score" style="color: white;">评分</a></li>
-          <li><a href="/cloud" style="color: white;">词云</a></li>
-          <li><a href="/aboutMe" style="color: white;">关于我</a></li>
-
-            <li><div class="dropdown">
-              <button class="button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="{{ url_for('get_avatar') }}" alt="avatar" class="avatar" id="avatar">
-              </button>
-            </div></li>
-
-        </ul>
-      </nav><!-- .nav-menu -->
-
-    </div>
-  </header><!-- End Header -->
-
-
-    <div class="container1">
-      <h1>个人信息</h1>
+  <div class="content">
+    <div class="profile-card" id="profile-card">
+        <h1>个人信息</h1>
       <form id="update-info-form" method="post" action="/update1">
         <label for="username">用户名：</label>
         <input type="text" id="username" name="username" value="{{users[1]}}">
@@ -126,7 +260,15 @@
         <input type="submit" value="修改密码" id="submit-btn">
       </form>
                <div id="message" class="message"></div>
+
     </div>
+
+    <!-- Add more content here -->
+  </div>
+</div>
+
+
+
 
   <!-- Vendor JS Files -->
   <script src="static/assets/vendor/jquery/jquery.min.js"></script>

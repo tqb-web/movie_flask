@@ -7,8 +7,11 @@
     <list default="true" id="b428f747-c5fe-4e33-9582-f41bcdd2d83e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/pythonMovie.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/pythonMovie.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/userInfo.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/userInfo.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/avatar/avatar_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/assets/avatar/avatar_1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/aboutMe.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/aboutMe.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/personInfo.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/personInfo.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
